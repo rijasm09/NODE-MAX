@@ -1,10 +1,23 @@
-// FOR SERVER CREATION
-const http = require('http')
+const express = require('express')
+const bodyParser = require('body-parser')
 
-const routes = require('./routes') //since it is not a global module we have to attach local path ./
+const app = express();
+app.use(bodyParser.urlencoded({extended:false}))
 
-const server = http.createServer(routes) //here it will execute function routes for incoming requests
+app.use('/add-product',(req,res)=>{
+    res.send('<form action="/product" method="POST"><input type="text" name="title"><button type="submit">Add Product</button></form>')
+})
+app.post('/product',(req,res,next,)=>{
+    console.log(req.body);
+    res.redirect('/')
+})
 
-server.listen(3000);
+app.use('/',(req,res,next)=>{
+    res.send('<h1>welcome to expressjs</h1>')
+})
+
+app.listen(3000, ()=> {
+    console.log("server listening on port 3000");
+});
 
 
